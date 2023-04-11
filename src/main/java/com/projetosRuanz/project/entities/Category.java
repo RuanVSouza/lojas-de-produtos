@@ -53,7 +53,10 @@ public class Category implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	public Set<Product> getProducts() {
+		return products;
+	}
 
 	@Override
 	public int hashCode() {
@@ -72,9 +75,7 @@ public class Category implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 
-	public Set<Product> getProducts() {
-		return products;
-	}
+	
 
 	
 }

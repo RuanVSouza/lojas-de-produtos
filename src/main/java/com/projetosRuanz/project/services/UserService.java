@@ -13,6 +13,8 @@ import com.projetosRuanz.project.repositories.UserRepository;
 import com.projetosRuanz.project.resources.exceptions.DataBaseException;
 import com.projetosRuanz.project.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Component
 public class UserService {
 
@@ -43,10 +45,13 @@ public class UserService {
 	}
 
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
-
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
